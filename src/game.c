@@ -40,20 +40,6 @@ void startGame(){
 									printf("\treturn 0;\n}\n\n");
 									printf("A.Runtime error\t\tC.New address of value\n");
 									printf("B.Value of variable\tD.None of the above\n\n");
-									// printf("Enter your answer:\n>>");
-									// answer = getchar();
-									// if(answer != '\n') clearStdin(NULL);
-									// if(!validAnswer(answer)){
-									// 	#ifdef _WIN32
-									// 		printf("Invalid answer.\n");
-									// 		system("@pause && cls");
-									// 	#elif __linux__
-									// 		printf("Invalid answer.\n");
-									// 		printf("Press enter to continue. . .");
-									// 		clearStdin(NULL);
-									// 		system("clear");
-									// 	#endif
-									// }
 									getAnswer(&answer);
 								}while(!validAnswer(answer));
 
@@ -223,11 +209,12 @@ void startGame(){
 						}
 					stage++;
 					}
-					end_lvl1(SCORE);
+					end_lvl1();
 					infoQ(ARRAY);
 
 				break;
 			case 2:
+				printf("#Unavailable level#\n");
 				break;
 			case 3:
 				break;
@@ -247,13 +234,13 @@ void printScore(){
 
 void infoQ(Q *questions){
 	for(int i = 0; i < 10; i++){
-		char *res = questions[i].solution == questions[i].answer ? "True" : ((questions[i].solution == questions[i].answer - 32) ? "True" : "False");
-		printf("\t\t|%c|%c Question_%02d: %50s|\n", questions[i].solution, questions[i].answer, i + 1, res);
+		char *res = questions[i].solution == questions[i].answer ? CORRECT : ((questions[i].solution == questions[i].answer - 32) ? CORRECT : WRONG);
+		printf("\t\t| Question_%02d: %50s|\n", i + 1, res);
 	}
 	printf("\t\t******************************************************************\n");
 }
 
-void end_lvl1(int score){
+void end_lvl1(){
 	printf("\n\t\t******************************************************************\n");
 	printf(
 		"\t\t| ######    ######    #####   #      #   #      #######    ##### |\n"\
@@ -265,6 +252,8 @@ void end_lvl1(int score){
 		"\t\t| #      #  ######   #####     ######    ######    #      #####  |\n"\
 	);
 	printf("\t\t******************************************************************\n");
+	printf("\t\t| SCORE: %2d%54c|\n", SCORE, ' ');
+	printf("\t\t|________________________________________________________________|\n");
 }
 void checkSolution(char solution, char answer){
 	if(solution == answer || (answer - 32) == solution){
@@ -287,7 +276,6 @@ void checkSolution(char solution, char answer){
 				clearStdin(NULL);
 				system("clear");
 			#endif
-		SCORE--;
 	}
 }
 
@@ -296,11 +284,7 @@ int reset(int *stage,Q **ptr){
 	while(1){
 		printf("\nDo you want to play again? (Y/n)\n>>");
 		restart = getchar();
-		if(restart == '\n'){
-			puts("Please try again. . .");
-			continue;
-		}
-		clearStdin(NULL);
+		if(restart != '\n') clearStdin(NULL);
 		if(restart == 'Y' || restart == 'y'){
 			*stage = 0;
 			free(*ptr);

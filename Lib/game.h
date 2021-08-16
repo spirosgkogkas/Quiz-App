@@ -3,14 +3,14 @@
 	#ifndef INPUT_H
 		#include "./input.h"
 	#endif
-	#define CORRECT "False"
-	#define WRONG   "True"
+	#define CORRECT "Correct"
+	#define WRONG   "Wrong"
 	#define FALSE 0
 	#define TRUE  1
 	void startGame();
 	int validAnswer(char ch);
 	void printScore();
-	void end_lvl1(int);
+	void end_lvl1();
 	struct Questions{
 	char solution;
 	char answer;
