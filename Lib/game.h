@@ -3,8 +3,10 @@
 	#ifndef INPUT_H
 		#include "./input.h"
 	#endif
-	#define FALSE "False"
-	#define TRUE  "True"
+	#define CORRECT "False"
+	#define WRONG   "True"
+	#define FALSE 0
+	#define TRUE  1
 	void startGame();
 	int validAnswer(char ch);
 	void printScore();
@@ -14,6 +16,7 @@
 	char answer;
 	};
 	typedef struct Questions Q;
+	int reset(int *stage, Q **ptr);
 	void infoQ(Q questions[]);
 	void checkSolution(char solution, char answer);
 	typedef int LEVEL;

@@ -42,7 +42,7 @@ void clearStdin(const char *name){
 void getAnswer(char *answer){
 	printf("Enter your answer:\n>>");
 	*answer = getchar();
-	clearStdin(NULL);
+	if(*answer != '\n') clearStdin(NULL);
 	if(!validAnswer(*answer)){
 		#ifdef _WIN32
 			printf("Invalid answer.\n");
