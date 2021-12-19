@@ -7,19 +7,21 @@ void startGame(){
 	LEVEL lvl;
 	char *name, answer;
 	int restart, stage = 0;
+
+	startScrn();
 	name = (char *)getName();
 	if(!name){
 		fprintf(SYSERR, "From -> game.c at [startGame.func][D:%s][T:%s]: NULL pointer. . .\n", __DATE__, __TIME__);
 		exit(EXIT_FAILURE);
 	}
-	
 	free(name);
+
 	while(1){
 		lvl = getLevel();
 		ARRAY = (Q *)malloc(sizeof( Q ) * 10);
 		if(!ARRAY){
-		fprintf(SYSERR, "From -> game.c at [startGame.func][D:%s][T:%s]: Unable to allocate memory for {struct Questions *} Array. . .\n", __DATE__, __TIME__);
-		exit(EXIT_FAILURE);
+			fprintf(SYSERR, "From -> game.c at [startGame.func][D:%s][T:%s]: Unable to allocate memory for {struct Questions *} Array. . .\n", __DATE__, __TIME__);
+			exit(EXIT_FAILURE);
 		}
 		switch(lvl){
 			case 1:
@@ -208,21 +210,104 @@ void startGame(){
 								break;
 						}
 					stage++;
-					}
+				}
 					end_lvl1();
 					infoQ(ARRAY);
-
-				break;
+					break;
 			case 2:
-				printf("#Unavailable level#\n");
 				break;
+				// puts("Level is under development.");
+				// while(1){
+				// 	char quit;
+				// 	printf("Do you want to try a different level?\n>>");
+				// 	quit = getchar();
+				// 	if(quit != '\n') clearStdin(NULL);
+				// 	if(quit == 'Y' || quit == 'y'){
+				// 		free(ARRAY);
+				// 		clearStdout();
+				// 		break;
+				// 	}
+				// 	else if(quit == 'N' || quit == 'n'){
+				// 		free(ARRAY);
+				// 		ARRAY = NULL;
+				// 		clearStdout();
+				// 		exit(EXIT_SUCCESS);
+				// 	}
+				// 	else{
+				// 		puts("Invalid option. . .");
+				// 		clearStdout();
+				// 	}
+				// }
+				// while(stage < 10){
+				// 		switch(stage){
+				// 			case 0:
+				// 				do{
+				// 					printf("LEVEL:%d\n", lvl);
+				// 					printScore();
+				// 					puts("\n\t\t+=================================================+");
+				// 					puts("\t\t| What's the meaning of char *(*ptr[10])(char *); |");
+				// 					puts("\t\t+=================================================+\n");
+				// 					puts("A.Syntax Error\t\t\t\tC.ptr is a function with parameters an array of [10] pointers to char");
+				// 					puts("\nB.ptr is a function with parameters\tD.ptr is an array of 10 pointers");
+				// 					puts("  (*ptr[10])(char *) returning char *\t  to functions (char *) returning char *\n");
+				// 					getAnswer(&answer);
+				// 				}while(!validAnswer(answer));
+
+				// 				ARRAY[stage].solution = 'D';
+				// 				ARRAY[stage].answer = answer;
+				// 				checkSolution(ARRAY[stage].solution, answer);
+				// 				break;
+				// 			case 1:
+				// 				do{
+				// 					printf("LEVEL:%d\n", lvl);
+				// 					puts("\n\t\t+==================================================================+");
+				// 					puts("\t\t| If we have the array -> int array[20][10][3] with address [10000]|");
+				// 					puts("\t\t| and we store the address to int (*ptr)[10][3]  = arr;            |");
+				// 					puts("\t\t| what would be the output if we incremented ptr with unary ptr++; |");
+				// 					puts("\t\t+==================================================================+");
+				// 					puts("A. 10120\t\tC. 10030");
+				// 					puts("B. 10240\t\tD. 10600");
+				// 					getAnswer(&answer);
+				// 				}while(!validAnswer(answer));
+
+				// 				ARRAY[stage].solution = 'A';
+				// 				ARRAY[stage].answer   = answer;
+				// 				checkSolution(ARRAY[stage].solution, answer);
+				// 				break;
+				// 			case 2:
+				// 				do{
+				// 					printf("LEVEL:%d\n", lvl);
+				// 					puts("\n\t\t+====================================+");
+				// 					puts("\t\t| What's")
+				// 				}
+				// 				break;
+				// 			case 3:
+				// 				break;
+				// 			case 4:
+				// 				break;
+				// 			case 5:
+				// 				break;
+				// 			case 6:
+				// 				break;
+				// 			case 7:
+				// 				break;
+				// 			case 8:
+				// 				break;
+				// 			case 9:
+				// 				break;
+				// 		}
+				// 		stage++;
+				// }
 			case 3:
 				break;
 			default:
 				break;
 		}
 		restart = reset(&stage, &ARRAY);
-		if(!restart) break;
+		if(!restart){
+			puts("Thanks for playing!");
+			break;
+		}
 	}
 }
 
@@ -288,11 +373,13 @@ int reset(int *stage,Q **ptr){
 		if(restart == 'Y' || restart == 'y'){
 			*stage = 0;
 			free(*ptr);
+			clearStdout();
 			return TRUE;
 		}
 		else if(restart == 'N' || restart == 'n'){
 			free(*ptr);
 			*ptr = NULL;
+			clearStdout();
 			return FALSE;
 		}
 		else printf("Invalid option try again. . .\n");

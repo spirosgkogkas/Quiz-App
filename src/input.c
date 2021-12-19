@@ -24,6 +24,14 @@ int validChoice(char *choice){
 	return 1;
 }
 
+void clearStdout(){
+	#ifdef _WIN32
+		system("cls");
+	#elif __linux__
+		system("clear");
+	#endif
+}
+
 void clearStdin(const char *name){
 	int ch;
 
@@ -42,6 +50,7 @@ void clearStdin(const char *name){
 void getAnswer(char *answer){
 	printf("Enter your answer:\n>>");
 	*answer = getchar();
+	while(*answer == ' ') *answer = getchar();
 	if(*answer != '\n') clearStdin(NULL);
 	if(!validAnswer(*answer)){
 		#ifdef _WIN32
@@ -131,13 +140,12 @@ int getLevel(){
 	char tmp_choice[B_SIZE];
 
 	do{
-		printf("\t\t\t\t\t  Levels\n\n");
-		printf("\t\t\t+==========================================+\n");
-		printf("\t\t\t|\t 1. Newbie wants to play.\t   |\n");
-		printf("\t\t\t|\t 2. Someone is feeling it.\t   |\n");
-		printf("\t\t\t|\t 3. ********MADMAN********\t   |\n");
-		printf("\t\t\t+==========================================+\n\n");
-
+		puts("\n\t\t\t\t\t\t Levels\n");
+		puts("\t\t\t\t+======================================+");
+		puts("\t\t\t\t|\t\t1.Easy                 |");
+		puts("\t\t\t\t|\t\t2.Advanced             |");
+		puts("\t\t\t\t|\t\t3.Master               |");
+		puts("\t\t\t\t+======================================+");
 		printf("Enter Level:\n>>");
 		fgets(tmp_choice, sizeof( tmp_choice ), stdin);
 		clearStdin(tmp_choice);
@@ -179,4 +187,22 @@ int getLevel(){
 	#endif
 
 	return choice;
+}
+void startScrn(){
+	clearStdout();
+	puts("\t\t+=========================================================================+");
+	puts("\t\t|   ####   #    #   #####  ######           #          ######     ######  |");
+	puts("\t\t|  #    #  #    #     #        #           # #        #      #   #      # |");
+	puts("\t\t|  #    #  #    #     #       #           #   #       #      #   #      # |");
+	puts("\t\t|  #  ###  #    #     #      #           #######      #######    #######  |");
+	puts("\t\t|   ####   #    #     #     #           #       #     #          #        |");
+	puts("\t\t|      ##   ####    #####  ######      #         #    #          #        |");
+	puts("\t\t+=========================================================================+");
+	putchar('\n');
+	putchar('\n');
+	putchar('\n');
+	puts("\t\t                               Press Enter");
+	printf("\t\t                                    ");
+	clearStdin(NULL);
+	clearStdout();
 }
